@@ -64,7 +64,7 @@ const QRCodeForm = () => {
   const [wifiHidden, setWifiHidden] = useState(false);
 
   // Backend server link (modify here with actual link)
-  const BASE_URL = "http://localhost:5000";
+  const BASE_URL = "https://qr-code-generator-hd0z.onrender.com";
 
   // Get current user ID
   const userId = session?.user?.id;
