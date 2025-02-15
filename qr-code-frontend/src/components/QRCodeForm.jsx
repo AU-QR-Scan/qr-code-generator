@@ -170,7 +170,7 @@ const QRCodeForm = () => {
     const urls = [];
 
     // Clean up old files before upload
-    await cleanUpFiles('photo-gallery');
+    await cleanUpFiles('photo-gallery',3,1);
 
     for (const file of files) {
       const filePath = `${userId}/${file.name}`;
