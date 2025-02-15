@@ -62,8 +62,9 @@ const QRCodeForm = () => {
   const [wifiPassword, setWifiPassword] = useState("");
   const [wifiEncryption, setWifiEncryption] = useState("WPA/WPA2");
   const [wifiHidden, setWifiHidden] = useState(false);
+
   // Backend server link (modify here with actual link)
-  const BASE_URL = "https://qr-code-generator-ff72.onrender.com";
+  const BASE_URL = "http://localhost:5000";
 
   // Get current user ID
   const userId = session?.user?.id;
@@ -236,7 +237,7 @@ const QRCodeForm = () => {
   };
 
 
-  //Cleanup Old Files if Limit Exceeded
+  //Cleanup Old Files if Limit Exceeded (Now if a bucket has more than 50 files, it will delete the oldest 10 files)
   const cleanUpFiles = async (bucketName, fileLimit = 50, deleteCount = 10) => {
     if (!session) {
       console.error("No session found. Cannot clean up files.");
