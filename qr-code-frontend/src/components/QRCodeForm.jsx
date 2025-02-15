@@ -128,6 +128,8 @@ const QRCodeForm = () => {
   
     const userId = session.user.id;
     const filePath = `${userId}/${file.name}`; // user's folder
+
+    await cleanUpFiles('pdf-files');
   
     const { data, error } = await supabase.storage
       .from('pdf-files')
@@ -144,7 +146,7 @@ const QRCodeForm = () => {
     // Generate signed URL
     const { data: signedUrlData, error: signedUrlError } = await supabase.storage
       .from('pdf-files')
-      .createSignedUrl(filePath, 3600); //Expires in 1 hour
+      .createSignedUrl(filePath, 28800); 
   
     if (signedUrlError) {
       console.error("Failed to generate signed URL:", signedUrlError.message);
@@ -168,7 +170,7 @@ const QRCodeForm = () => {
     const urls = [];
 
     // Clean up old files before upload
-    await cleanUpFiles('photo-gallery', 5, 2);
+    await cleanUpFiles('photo-gallery');
 
     for (const file of files) {
       const filePath = `${userId}/${file.name}`;
@@ -185,7 +187,7 @@ const QRCodeForm = () => {
       // Generate a signed URL
       const { data: signedUrlData, error: signedUrlError } = await supabase.storage
         .from('photo-gallery')
-        .createSignedUrl(filePath, 3600); 
+        .createSignedUrl(filePath, 28800); 
 
       if (signedUrlError) {
         console.error("Failed to generate signed URL:", signedUrlError.message);
@@ -211,7 +213,7 @@ const QRCodeForm = () => {
     const filePath = `${userId}/${file.name}`;
 
     // Clean up old MP3 files before upload
-    await cleanUpFiles('mp3-files', 5, 2);
+    await cleanUpFiles('mp3-files');
 
     const { data, error } = await supabase.storage
       .from('mp3-files')
@@ -226,7 +228,7 @@ const QRCodeForm = () => {
     // Generate a signed URL
     const { data: signedUrlData, error: signedUrlError } = await supabase.storage
       .from('mp3-files')
-      .createSignedUrl(filePath, 3600); 
+      .createSignedUrl(filePath, 28800); 
 
     if (signedUrlError) {
       console.error("Failed to generate signed URL:", signedUrlError.message);
