@@ -129,7 +129,7 @@ const QRCodeForm = () => {
     const userId = session.user.id;
     const filePath = `${userId}/${file.name}`; // user's folder
 
-    await cleanUpFiles('pdf-files');
+    await cleanUpFiles('pdf-files',50,10);
   
     const { data, error } = await supabase.storage
       .from('pdf-files')
@@ -170,7 +170,7 @@ const QRCodeForm = () => {
     const urls = [];
 
     // Clean up old files before upload
-    await cleanUpFiles('photo-gallery',3,1);
+    await cleanUpFiles('photo-gallery',50,10);
 
     for (const file of files) {
       const filePath = `${userId}/${file.name}`;
@@ -216,7 +216,7 @@ const QRCodeForm = () => {
     await cleanUpFiles('mp3-files');
 
     const { data, error } = await supabase.storage
-      .from('mp3-files')
+      .from('mp3-files',50,10)
       .upload(filePath, file, { upsert: false });
 
     if (error) {
@@ -240,7 +240,7 @@ const QRCodeForm = () => {
 
 
   //Cleanup Old Files if Limit Exceeded (Now if a bucket has more than 50 files, it will delete the oldest 10 files)
-  const cleanUpFiles = async (bucketName, fileLimit = 3, deleteCount = 1) => {
+  const cleanUpFiles = async (bucketName, fileLimit = 50, deleteCount = 10) => {
     if (!session) {
       console.error("No session found. Cannot clean up files.");
       return;
